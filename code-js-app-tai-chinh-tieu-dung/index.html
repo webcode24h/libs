@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Code JS app, web tài chính , vay tiêu dùng bằng Javascript</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap&subset=cyrillic" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <div class="loan-calculator">
+        <div class="loan-calculator__controls-list">
+            <div class="loan-calculator__control loan-calculator-control">
+                <span class="loan-calculator-control__caption">Số tiền cần vay <b><span data-money-range-value>10 000 000</span> đ</b>
+                </span>
+                <div class="loan-calculator-control__range loan-calculator-range-slider loan-calculator-range-slider--money" data-money-range-slider></div>
+                <div class="loan-calculator-control__help-values">
+                    <div class="loan-calculator-control__min-value">10 000 000 đ</div>
+                    <div class="loan-calculator-control__max-value">150 000 000 đ</div>
+                </div>
+            </div>
+            <div class="loan-calculator__control loan-calculator-control">
+                <span class="loan-calculator-control__caption">Thời gian vay: <b><span data-months-range-value>3</span> <span data-months-range-measure>tháng</span></b>
+                </span>
+                <div class="loan-calculator-control__range loan-calculator-range-slider loan-calculator-range-slider--months" data-months-range-slider></div>
+                <div class="loan-calculator-control__help-values">
+                    <div class="loan-calculator-control__min-value">1 tháng</div>
+                    <div class="loan-calculator-control__max-value">18 tháng</div>
+                </div>
+            </div>
+        </div>
+        <div class="loan-calculator__result loan-calculator-result">
+            <span class="loan-calculator-result__caption">Thanh toán hàng tháng:</span>
+            <b class="loan-calculator-result__value"><span data-result-value>45 000</span> đ</b></br>
+      <span class="loan-calculator-control__caption" style="font-size:12px; margin-top: 2em"><span style="color: red">*</span>&nbspGiá trị này có thể thay đổi</span>
+        </div>
+    </div>
+</div>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.1.0/wNumb.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+.brz-bg_effect-snow .brz-bg-image::before, .brz-bg_effect-snow .brz-picture::after {
+    content: "";
+    background-image: url(https://webcode24h.com/thu_vien/images/effect_sparkle_1.png),url(https://webcode24h.com/thu_vien/images/effect_sparkle_2.png);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    animation: sparkle 60s linear infinite;
+    animation-duration: 60s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: sparkle;
+}
+@-webkit-keyframes  sparkle {
+	 0% {
+    background-position: 0px 0px, 0px 0px, 0px 0px;
+}
+100% {
+    background-position: -500px -1000px, -400px -400px, 300px 300px;
+}
+}

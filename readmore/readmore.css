@@ -1,0 +1,15 @@
+.brz-columns_readmore-hidden::before {
+  position: absolute;
+  content: "» Read more...";
+  color: #999999;
+  font-weight: 900;
+  text-align: center;
+  width: 100%;
+  height: 150px;
+  background: -o-linear-gradient(top, rgba(255,255,255,0), #ffffff 120px);
+  background: linear-gradient(180deg, rgba(255,255,255,0), #ffffff 120px);
+  bottom: 0;
+  padding: 125px 0 0 0;
+  cursor: pointer;
+  z-index: 1;
+}

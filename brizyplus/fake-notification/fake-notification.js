@@ -161,4 +161,4 @@ setTimeout(function(){document.querySelector("#fake_notification").classList.add
 }, rand * 1000);
 document.body.insertAdjacentHTML(
     'beforeend',
-   `<a rel="dofollow" href="https://webcode24h.com" target="_blank" style="position: absolute; height: 20px; width: 200px; bottom: -22px;">webcode24h.com</a>`);
+   `<a rel="dofollow" href="https://webcode24h.com" target="_blank" style="position: absolute; height: 20px; width: 150px; bottom: 0; right: 0;">webcode24h.com</a>`);

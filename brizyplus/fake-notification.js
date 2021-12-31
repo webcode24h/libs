@@ -144,7 +144,7 @@ var rand = Math.floor(Math.random()*(max-min+1)+min);
 
 document.querySelector("#avatar").setAttribute("src",r_avatar[Math.floor(36*Math.random())]);
 document.querySelector("#name_buyer").innerHTML = (r_name_buyer[Math.floor(32*Math.random())]);
-document.querySelector("#num_telephone").innerHTML = "✆" + "XXX-XXXX-" + (r_num_telephone[Math.floor(39*Math.random())]);
+document.querySelector("#num_telephone").innerHTML = "✆ " + "XXX-XXXX-" + (r_num_telephone[Math.floor(39*Math.random())]);
 document.querySelector("#name_type_item").innerHTML = "Someone is entering text...";
 setTimeout(function(){document.querySelector("#name_type_item").innerHTML = (r_name_type_item[Math.floor(7*Math.random())]) + "&emsp;🕐 Just ordered";}, 5000);
 setTimeout(function(){document.querySelector("#fake_notification").classList.add('fake_notification__hidden');}, 10000);
@@ -152,7 +152,7 @@ setInterval(function(){
 var timeVal = Math.floor(70*Math.random()) + 1;
 document.querySelector("#avatar").setAttribute("src",r_avatar[Math.floor(36*Math.random())]);
 document.querySelector("#name_buyer").innerHTML = (r_name_buyer[Math.floor(32*Math.random())]);
-document.querySelector("#num_telephone").innerHTML = (r_num_telephone[Math.floor(39*Math.random())] + "XXXX");
+document.querySelector("#num_telephone").innerHTML = "✆ " + "XXX-XXXX-" + (r_num_telephone[Math.floor(39*Math.random())]);
 document.querySelector("#name_type_item").innerHTML = (r_name_type_item[Math.floor(7*Math.random())]);
 document.querySelector('#time').innerHTML = "🕐 " + (timeVal);
 if (timeVal < 3) {document.querySelector("#time_unit").innerHTML = "hour ago";} else {document.querySelector("#time_unit").innerHTML = "minute ago";}

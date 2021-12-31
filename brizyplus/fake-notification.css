@@ -1,0 +1,44 @@
+#avatar {
+        border-radius: 50px;
+        width: 46px;
+        height: 46px;
+    }
+    
+    #name_buyer,
+    #num_telephone {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 25px;
+    }
+
+    #name_type_item,
+    #time,
+    #time_unit {
+        font-size: 12px;
+    }
+    
+    #fake_notification {
+        z-index: 11;
+        font-family: 'Montserrat';
+        display: inline-flex;
+        background: #00398d;
+        border-radius: 50px;
+        position: fixed;
+        height: auto;
+        bottom: 20px;
+        left: 20px;
+        color: #ffffff;
+        padding: 5px;
+    }
+    
+    .fake_notification__content {
+        padding: 0 20px 0 12px;
+    }
+    
+    .fake_notification__content div {
+        display: block;
+    }
+    
+    .fake_notification__hidden {
+        visibility: hidden;
+    }

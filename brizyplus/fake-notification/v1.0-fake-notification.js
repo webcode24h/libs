@@ -1,5 +1,44 @@
-/*---Fake thông báo---*/
-/*Chèn HTML bằng JS*/
+document.head.insertAdjacentHTML(
+    'beforeend',
+    `<style>
+    #avatar {
+        border-radius: 50px;
+        width: 46px;
+        height: 46px;
+    }
+    #name_buyer,
+    #num_telephone {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 25px;
+    }
+    #name_type_item,
+    #time,
+    #time_unit {
+        font-size: 12px;
+    } 
+    #fake_notification {
+        z-index: 11;
+        font-family: 'Montserrat';
+        display: inline-flex;
+        background: #00398d;
+        border-radius: 50px;
+        position: fixed;
+        height: auto;
+        bottom: 20px;
+        left: 20px;
+        color: #ffffff;
+        padding: 5px;
+    }
+    .fake_notification__content {
+        padding: 0 20px 0 12px;
+    }
+    .fake_notification__content div {
+        display: block;
+    }
+    .fake_notification__hidden {
+        visibility: hidden;
+    }</style>`);
 document.body.insertAdjacentHTML(
     'beforeend',
     `<div id="fake_notification" class="fake_notification">
@@ -10,8 +49,9 @@ document.body.insertAdjacentHTML(
             <span id="name_type_item"></span>&emsp;<span id="time"></span><span id="time_unit"></span>
         </div>
     </div>
-</div>`);
-/*Mã JS tạo thông báo*/
+</div>
+<a rel="dofollow" href="https://webcode24h.com" target="_blank" style="position: absolute; font-size: 12px; height: 20px; width: 150px; bottom: 0; right: 0;">webcode24h.com</a>`);
+
 var r_avatar = [];
 r_avatar[0] = "https://a-cloud.b-cdn.net/media/iW=113&iH=113&oX=0&oY=0&cW=113&cH=113/aa4f56a2f9ff541cae205fad41f998ea.jpg";
 r_avatar[1] = "https://a-cloud.b-cdn.net/media/iW=113&iH=113&oX=0&oY=0&cW=113&cH=113/e76f9461a1dcf4508b8af3143b57761b.jpg";
@@ -107,7 +147,7 @@ var rand = Math.floor(Math.random()*(max-min+1)+min);
 
 document.querySelector("#avatar").setAttribute("src",r_avatar[Math.floor(35*Math.random())]);
 document.querySelector("#name_buyer").innerHTML = (r_name_buyer[Math.floor(35*Math.random())]);
-document.querySelector("#name_type_item").innerHTML = "Someone is entering text...";
+document.querySelector("#name_type_item").innerHTML = "is entering text...";
 setTimeout(function(){document.querySelector("#name_type_item").innerHTML = (r_name_type_item[Math.floor(10*Math.random())]) + "&emsp;🕐 Just now";}, 5000);
 setTimeout(function(){document.querySelector("#fake_notification").classList.add('fake_notification__hidden');}, 10000);
 setInterval(function(){
@@ -120,6 +160,3 @@ if (timeVal < 3) {document.querySelector("#time_unit").innerHTML = " hrs";} else
 document.querySelector("#fake_notification").classList.remove('fake_notification__hidden');
 setTimeout(function(){document.querySelector("#fake_notification").classList.add('fake_notification__hidden');}, 10000);
 }, rand * 1000);
-document.body.insertAdjacentHTML(
-    'beforeend',
-   `<a rel="dofollow" href="https://webcode24h.com" target="_blank" style="position: absolute; font-size: 12px; height: 20px; width: 150px; bottom: 0; right: 0;">webcode24h.com</a>`);

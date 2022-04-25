@@ -118,8 +118,7 @@ if (fnv32a(str_txt) == "87468541") {
             <span id="name_type_item"></span>&emsp;<span id="time"></span><span id="time_unit"></span>
         </div>
     </div>
-</div>
-<a rel="dofollow" href="https://webcode24h.com" target="_blank" style="position: absolute; font-size: 12px; height: 20px; width: 150px; bottom: 0; right: 0;">webcode24h.com</a>`);
+</div>`);
 
 	var rand = Math.floor(Math.random() * (max - min + 1) + min);
 

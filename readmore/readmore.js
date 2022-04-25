@@ -1,12 +1,12 @@
-document.getElementById("brz-columns_readmore").className += " brz-columns_readmore-hidden";
-var current = document.getElementsByClassName("brz-columns_readmore-hidden");
-var height_current = current[0].clientHeight;
-if (height_current > 500) {
-current[0].style= "height: 50vh; overflow: hidden";
-} else {
-    current[0].classList.remove('brz-columns_readmore-hidden');
-  }
-current[0].addEventListener("click", function() {
-current[0].style= "height: auto; overflow: hidden";
-current[0].classList.remove('brz-columns_readmore-hidden');
+const readmore_all = document.querySelectorAll('.readmore');
+for (const readmore of readmore_all) {
+	if (readmore.clientHeight > 150) {
+		readmore.classList.add('open_readmore');
+	}
+}
+var open_readmore_all = document.querySelectorAll('.open_readmore');
+Array.from(open_readmore_all).forEach(open_readmore => {
+	open_readmore.addEventListener('click', function() {
+		open_readmore.classList.remove('open_readmore');
+	});
 });

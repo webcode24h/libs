@@ -1,9 +1,9 @@
 /*------thêm HTML trước javascript----
 
 <link href="https://cdn.jsdelivr.net/gh/webcode24h/libs@main/brizyplus/fake-notification/fake-notification.css" rel="stylesheet">
-<div id="webtricks"><a style="position: absolute; font-size: 12px; height: 20px; width: 150px; bottom: 0; right: 0;" href="https://webcode24h.com/">webcode24h.com</a></div>
+<div class="webtricks"><a style="position: absolute; font-size: 12px; height: 20px; width: 150px; bottom: 0; right: 0;" href="https://webcode24h.com/">webcode24h.com</a></div>
 
-------thêm HTML trước javascript----*/
+------end----*/
 
 var r_avatar = [];
 r_avatar[0] = "https://a-cloud.b-cdn.net/media/iW=113&iH=113&oX=0&oY=0&cW=113&cH=113/aa4f56a2f9ff541cae205fad41f998ea.jpg";

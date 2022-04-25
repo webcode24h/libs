@@ -97,6 +97,7 @@ r_name_type_item[10] = "Purchased an item";
 var min = 30;
 var max = 120;
 
+window.onload = function() {
 function fnv32a(str) {
 	var FNV1_32A_INIT = 0x811c9dc6;
 	var hval = FNV1_32A_INIT;
@@ -106,8 +107,7 @@ function fnv32a(str) {
 	}
 	return hval >>> 0;
 }
-var str_txt = document.getElementById("webtricks").innerHTML;
-if (fnv32a(str_txt) == "87468541") {
+if (fnv32a(document.getElementsByClassName("webtricks")[0].innerHTML) == "87468541") {
 	document.body.insertAdjacentHTML(
 		'beforeend',
 		`<div id="fake_notification" class="fake_notification">
@@ -147,4 +147,5 @@ if (fnv32a(str_txt) == "87468541") {
 			document.querySelector("#fake_notification").classList.add('fake_notification__hidden');
 		}, 10000);
 	}, rand * 1000);
+}
 }

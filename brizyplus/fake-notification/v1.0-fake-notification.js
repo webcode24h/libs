@@ -149,12 +149,12 @@ function checkCookie() {
 	// checking whether user is null or not
 	if (user == "") {
 		//if user is not null then alert
-		document.querySelector("#avatar").setAttribute("src", r_avatar[Math.floor(36 * Math.random())]);
-		document.querySelector("#name_buyer").innerHTML = (r_name_buyer[Math.floor(32 * Math.random())]);
+		document.querySelector("#avatar").setAttribute("src", r_avatar[Math.floor(35 * Math.random())]);
+		document.querySelector("#name_buyer").innerHTML = (r_name_buyer[Math.floor(35 * Math.random())]);
 		document.querySelector("#name_type_item").innerHTML = "is entering text...";
 		document.querySelector("#fake_notification").classList.remove('fake_notification__hidden');
 		setTimeout(function() {
-			document.querySelector("#name_type_item").innerHTML = "Purchased an item&ensp;" + "&emsp;🕐 Just now";
+			document.querySelector("#name_type_item").innerHTML = (r_name_type_item[Math.floor(10 * Math.random())]) + "&emsp;🕐 Just now";
 		}, 5000);
 		setTimeout(function() {
 			document.querySelector("#fake_notification").classList.add('fake_notification__hidden');

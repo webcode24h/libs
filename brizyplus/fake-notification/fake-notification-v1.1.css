@@ -18,7 +18,7 @@
     }
     
     #fake_notification {
-        z-index: 11;
+        z-index: 12;
         font-family: 'Montserrat';
         display: inline-flex;
         background: #00398d;

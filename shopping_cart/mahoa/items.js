@@ -74,15 +74,7 @@ function addToCart() {
 	const cartDOMItems = document.querySelectorAll(".cart_item");
 
 	cartDOMItems.forEach(individualItem => {
-		if (individualItem.querySelector(".product__name").innerText === product.name) {
-			// increrase
-			increaseItem(individualItem, product);
-			// decrease
-			decreaseItem(individualItem, product);
-			// Removing Element
-			removeItem(individualItem, product);
-
-		}
+		var _0x7042=["\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x2E\x70\x72\x6F\x64\x75\x63\x74\x5F\x5F\x6E\x61\x6D\x65","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x6E\x61\x6D\x65"];if(individualItem[_0x7042[2]](_0x7042[1])[_0x7042[0]]=== product[_0x7042[3]]){increaseItem(individualItem,product);decreaseItem(individualItem,product);removeItem(individualItem,product)}
 	});
 
 	cartItems.push(product);
@@ -98,15 +90,7 @@ function loadData() {
 			const cartDOMItems = document.querySelectorAll(".cart_item");
 
 			cartDOMItems.forEach(individualItem => {
-				if (individualItem.querySelector(".product__name").innerText === product.name) {
-					// increrase
-					increaseItem(individualItem, product);
-					// decrease
-					decreaseItem(individualItem, product);
-					// Removing Element
-					removeItem(individualItem, product);
-
-				}
+				var _0x7042=["\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x2E\x70\x72\x6F\x64\x75\x63\x74\x5F\x5F\x6E\x61\x6D\x65","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x6E\x61\x6D\x65"];if(individualItem[_0x7042[2]](_0x7042[1])[_0x7042[0]]=== product[_0x7042[3]]){increaseItem(individualItem,product);decreaseItem(individualItem,product);removeItem(individualItem,product)}
 			});
 		});
 		calculateTotal();

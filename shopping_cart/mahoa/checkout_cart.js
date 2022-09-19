@@ -1,5 +1,3 @@
-/*<script src="https://www.paypal.com/sdk/js?client-id=[-----------value client-id by Paypal developer (delete"[]")-------]&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>---*/
-
 const cartDOM = document.querySelector(".cart__items");
 const totalCost = document.querySelector("#total__cost");
 
@@ -9,15 +7,6 @@ let cartItems = (JSON.parse(localStorage.getItem("cart_items")) || []);
 
 document.addEventListener("DOMContentLoaded", loadData);
 
-/*
-document.addEventListener('change', (event) => {
-	// Make sure, that you're receiving event from a correct element
-	if (document.querySelector("#form_dathang form div.brz-forms2__alert--success") != null) {
-		clearCartItems();
-	}
-});
-*/
-
 function loadData() {
 	if (cartItems.length > 0) {
 		cartItems.forEach(product => {
@@ -26,7 +15,15 @@ function loadData() {
 			const cartDOMItems = document.querySelectorAll(".cart_item");
 
 			cartDOMItems.forEach(individualItem => {
-				var _0x419c=["\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x2E\x70\x72\x6F\x64\x75\x63\x74\x5F\x5F\x6E\x61\x6D\x65","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x6E\x61\x6D\x65"];if(individualItem[_0x419c[2]](_0x419c[1])[_0x419c[0]]=== product[_0x419c[3]]){increaseItem(individualItem,product);decreaseItem(individualItem,product);removeItem(individualItem,product)}
+				if (individualItem.querySelector(".product__name").innerText === product.name) {
+					// increrase
+					increaseItem(individualItem, product);
+					// decrease
+					decreaseItem(individualItem, product);
+					// Removing Element
+					removeItem(individualItem, product);
+
+				}
 			});
 		});
 		calculateTotal();
@@ -49,15 +46,15 @@ function saveToLocalStorage() {
 
 function addItemToTheDOM(product) {
 	// Adding the new Item to the Dom
-	cartDOM.insertAdjacentHTML("afterbegin", `<div class="cart_item" style="padding: 10px 0;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: horizontal;-webkit-box-direction: normal;-ms-flex-direction: row;flex-direction: row;-webkit-box-align: center;-ms-flex-align: center;align-items: center;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;width: 100%;border-bottom: 1px dashed #f6b08c;">
-    <img class="product_image" style="margin: auto; width: 50px;height: 50px;border-radius: 5px;" src="${product.image}" alt="" srcset="">
-    <h4 class="product__name" style="margin: auto;display: inline;">${product.name}</h4>
-    <a class="btn__small" style="margin: auto;padding: 1px;border-radius: 10px;background: #40a832e5;color: #fff;font-size: 13px;cursor: pointer;line-height: 1;text-align: center;width: 15px;height: 15px;" action="decrease">&minus;</a>
-    <h4 class="product__quantity" style="margin: auto;display: inline;">${product.quantity}</h4>
-    <a class="btn__small" style="margin: auto;padding: 1px;border-radius: 10px;background: #40a832e5;color: #fff;font-size: 13px;cursor: pointer;line-height: 1;text-align: center;width: 15px;height: 15px;" action="increase">&plus;</a>
-    <span class="product__price" style="margin: auto;">${product.price}</span>
-    <a class="btn__small btn_remove" style="margin: auto;background: #ec4949;padding: 1px;border-radius: 10px;color: #fff;font-size: 13px;cursor: pointer;line-height: 1;text-align: center;width: 15px;height: 15px;" action="remove">&times;</a>
-</div>`);
+	cartDOM.insertAdjacentHTML("beforeend", `<tr class="cart_item">
+<td style="padding: 2px 0 2px 8px; border-bottom: 1px dotted #666666; width: 50px; height: 18.125px;"><img class="product_image" style="width: 50px; height: 50px;" src="${product.image}"></td>
+<td class="product__name" style="padding: 2px 8px; border-bottom: 1px dotted #666666; width: calc(100% - 50px); height: 18.125px;">${product.name}</td>
+<td style="padding: 2px 0; text-align: right; border-bottom: 1px dotted #666666; width: 5%; height: 18.125px;"><a class="btn__small show-btn" style="padding: 1px; border-radius: 10px; background: #40a832e5; color: #fff; opacity: 0; font-size: 13px; cursor: pointer; line-height: 1; text-align: center; width: 15px; height: 15px;" action="decrease">&minus;</a></td>
+<td class="product__quantity" style="padding: 2px 0; border-bottom: 1px dotted #666666; width: 10%; height: 18.125px; text-align: center;">${product.quantity}</td>
+<td style="padding: 2px 0; border-bottom: 1px dotted #666666; width: 5%; height: 18.125px; text-align: left;"><a class="btn__small show-btn" style="padding: 1px; border-radius: 10px; background: #40a832e5; color: #fff; opacity: 0; font-size: 13px; cursor: pointer; line-height: 1; text-align: center; width: 15px; height: 15px;" action="increase">&plus;</a></td>
+<td class="product__price" style="padding: 2px 8px; text-align: right; border-bottom: 1px dotted #666666; width: 20%; height: 18.125px;">${product.price}$</td>
+<td style="padding: 2px 8px; border-bottom: 1px dotted #666666; width: 5%; text-align: center;"><a class="btn__small btn_remove show-btn" style="background: #ec4949; padding: 1px; border-radius: 10px; color: #fff; font-size: 13px; cursor: pointer; line-height: 1;opacity: 0;" action="remove">&times;</a></td>
+</tr>`);
 }
 
 function increaseItem(individualItem, product) {
@@ -75,33 +72,7 @@ function increaseItem(individualItem, product) {
 
 }
 
-function decreaseItem(individualItem, product) {
-
-	individualItem.querySelector("[action='decrease']").addEventListener('click', () => {
-		// all cart items in the dom
-		cartItems.forEach(cartItem => {
-			// Actual Array
-			if (cartItem.name === product.name) {
-				if (cartItem.quantity > 1) {
-					individualItem.querySelector(".product__quantity").innerText = --cartItem.quantity;
-					calculateTotal();
-					saveToLocalStorage();
-				} else {
-					// removing this element and assign the new elemntos to the old of the array
-					console.log(cartItems);
-
-					cartItems = cartItems.filter(newElements => newElements.name !== product.name);
-					individualItem.remove();
-
-					calculateTotal();
-					saveToLocalStorage();
-
-				}
-
-			}
-		});
-	});
-}
+var _0x1ed6=["\x63\x6C\x69\x63\x6B","\x6E\x61\x6D\x65","\x71\x75\x61\x6E\x74\x69\x74\x79","\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x2E\x70\x72\x6F\x64\x75\x63\x74\x5F\x5F\x71\x75\x61\x6E\x74\x69\x74\x79","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x6C\x6F\x67","\x66\x69\x6C\x74\x65\x72","\x72\x65\x6D\x6F\x76\x65","\x66\x6F\x72\x45\x61\x63\x68","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72","\x5B\x61\x63\x74\x69\x6F\x6E\x3D\x27\x64\x65\x63\x72\x65\x61\x73\x65\x27\x5D"];function decreaseItem(_0x8996x2,_0x8996x3){_0x8996x2[_0x1ed6[5]](_0x1ed6[11])[_0x1ed6[10]](_0x1ed6[0],()=>{cartItems[_0x1ed6[9]]((_0x8996x4)=>{if(_0x8996x4[_0x1ed6[1]]=== _0x8996x3[_0x1ed6[1]]){if(_0x8996x4[_0x1ed6[2]]> 1){_0x8996x2[_0x1ed6[5]](_0x1ed6[4])[_0x1ed6[3]]=  --_0x8996x4[_0x1ed6[2]];calculateTotal();saveToLocalStorage()}else {console[_0x1ed6[6]](cartItems);cartItems= cartItems[_0x1ed6[7]]((_0x8996x5)=>{return _0x8996x5[_0x1ed6[1]]!== _0x8996x3[_0x1ed6[1]]});_0x8996x2[_0x1ed6[8]]();calculateTotal();saveToLocalStorage()}}})})}
 
 function removeItem(individualItem, product) {
 
@@ -131,8 +102,7 @@ function clearCartItems() {
 	});
 	calculateTotal();
 }
-
-// hidden form - show paypal
+// tab
 let submitCheckOut = document.querySelector("#form_dathang form div.brz-forms2__item-button button.brz-btn-submit");
 document.querySelector("#brz-tabs--style3").classList.add("hidden-tab");
 // Attach event listener to the document
@@ -144,7 +114,7 @@ document.addEventListener('change', (event) => {
 	}
 });
 
-// paypal
+//paypal
 	function initPayPalButton() {
 		paypal.Buttons({
 			style: {

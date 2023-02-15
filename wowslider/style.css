@@ -258,8 +258,6 @@ _:-ms-input-placeholder, :root #wowslider-container1 a.ws_playpause > span:befor
 	margin-top: -3em;
 	color: #ffffff;
 	z-index: 100;
-	-webkit-transition: background 200ms ease-in-out, -webkit-transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
-	transition: background 200ms ease-in-out, transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 }
 #wowslider-container1 a.ws_next {
 	right: 0;
@@ -303,40 +301,42 @@ _:-ms-input-placeholder, :root #wowslider-container1 a.ws_prev > span:before {li
 }
 #wowslider-container1 a.ws_prev,
 #wowslider-container1 a.ws_next {
-  -webkit-transition: 300ms padding 300ms ease, 300ms margin-top 300ms ease;
-  transition: 300ms padding 300ms ease, 300ms margin-top 300ms ease;
+	padding: 0;
+	height: 4em;
+	-webkit-transition: 300ms all 300ms ease;
+	transition: 300ms all 300ms ease;
 }
 #wowslider-container1 a.ws_prev:hover,
 #wowslider-container1 a.ws_next:hover {
-  padding: 0;
-  margin-top: -3.4em;
-  -webkit-transition: 300ms padding ease, 300ms margin-top ease;
-  transition: 300ms padding ease, 300ms margin-top ease;
+	height: 6em;
+	margin-top: -3.4em;
+	-webkit-transition: 300ms all ease;
+	transition: 300ms all ease;
 }
 #wowslider-container1 a.ws_prev img,
 #wowslider-container1 a.ws_next img {
-  position: absolute;
-  top: 0;
-  height: 4em;
-  border: 1em solid var(--color-ws);
-  -webkit-transition: 300ms right ease, 300ms left ease;
-  transition: 300ms right ease, 300ms left ease;
+	position: absolute;
+	top: 0;
+	height: 4em;
+	border: 1em solid var(--color-ws);
+	-webkit-transition: 300ms right ease, 300ms left ease;
+	transition: 300ms right ease, 300ms left ease;
 }
 #wowslider-container1 a.ws_prev img {
-  left: -100em;
+	left: -100em;
 }
 #wowslider-container1 a.ws_next img {
-  right: -100em;
+	right: -100em;
 }
 #wowslider-container1 a.ws_prev:hover img {
-  left: 3.5em;
-  -webkit-transition: 300ms left 300ms ease;
-  transition: 300ms left 300ms ease;
+	left: 3.5em;
+	-webkit-transition: 300ms left 300ms ease;
+	transition: 300ms left 300ms ease;
 }
 #wowslider-container1 a.ws_next:hover img {
-  right: 3.5em;
-  -webkit-transition: 300ms right 300ms ease;
-  transition: 300ms right 300ms ease;
+	right: 3.5em;
+	-webkit-transition: 300ms right 300ms ease;
+	transition: 300ms right 300ms ease;
 }
 
 /* bottom center */

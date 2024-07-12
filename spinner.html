@@ -1,0 +1,625 @@
+<table border="0" width="100%">
+	<tr>
+		<td>
+			<div id="textSpin" contenteditable="true" spellcheck="false" style="width:100%; min-height: 250px;">Bạn có cảm thấy mệt mỏi khi dành hàng giờ để tạo ra các bài báo và đấu tranh để tìm ra nội dung mới và độc đáo không? Article Spinner, công cụ cuối cùng sẽ cách mạng hóa quá trình viết của bạn. Được hỗ trợ bởi một cơ sở dữ liệu rộng lớn gồm các từ đồng nghĩa được tuyển chọn cẩn thận, Article Spinner đưa việc sáng tạo nội dung của bạn lên một tầm cao mới. Với Article Spinner, bạn có quyền truy cập vào một bộ sưu tập lớn các từ đồng nghĩa. Thuật toán tiên tiến của chúng tôi rà soát trên web để mang đến cho bạn phạm vi từ đồng nghĩa đa dạng và phù hợp nhất, đảm bảo bài viết của bạn hấp dẫn, lôi cuốn và trên hết là hoàn toàn độc đáo. Article Spinner tái cấu trúc các câu một cách thông minh với tính năng quay lồng nhau, đảm bảo rằng mỗi bài báo đều giống như một tác phẩm mới, nguyên bản. Bằng cách kết hợp nhiều lớp kéo sợi, bạn có thể tạo ra hàng trăm bài báo chỉ trong vài phút.</div>
+			<div id="test" style="display: none;"></div>
+		</td>
+	</tr>
+	<tr>
+		<td id="advanced" class="flex">
+			<label><input type="checkbox" id="unique" checked> Không sử dụng lại từ gốc</label>
+			<label><input type="checkbox" id="nested-spintax" checked> Hỗ trợ spintax lồng nhau</label>
+			<label data-title="Level 1: More Accurate/Level 3: Many synonyms but Less Accurate">&#10070; Từ đồng nghĩa: <select name="level" id="levelSelect">
+				<option value="Level 1">Level 1</option>
+				<option value="Level 2">Level 2</option>
+				<option value="Level 3">Level 3</option>
+			</select></label>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="text" id="anchor-text" placeholder="{anchortext_1|anchortext_2}">
+			<input type="text" id="backlink" placeholder="{link_1.com|link_2.com}">
+			<button id="btn-link">Thêm link</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<button id="synonym" onclick="highLight();">Highlight cụm từ</button>
+			<button id="inpHtml" style="display: none;" onclick="Html();"><span id="showHtml">Html Code</span><span id="showPreview" class="hidden">Preview</span></button>
+			<button id="auto-spin" onclick="autoSpin();">Tạo cấu trúc spintax</button>
+			<button id="reset" style="display: none" onclick="resetInput();">Reset</button>
+			<button id="inpSpin" onclick="Spin();" style="display: none">VIẾT LẠI NỘI DUNG</button>
+		</td>
+	</tr>
+	<tr>
+		<td id="outputSpin" class="hidden">
+			<p>Nội dung sau khi được viết lại.</p>
+			<textarea id="textHtml" spellcheck="false" rows="10" class="hidden"></textarea>
+			<div id="lblSpin"></div>
+		</td>
+	</tr>
+</table>
+<div id="loading" style="display: none"><img src="https://cloud-1de12d.b-cdn.net/media/original/1ce42c3190113c7488dae29f403bb0d5/bars.svg" width="40"></div>
+<div id="popup-right-click" style="text-wrap: nowrap; display: none">
+	<ul></ul>
+	<button>Thêm</button>
+</div>
+<script type="text/javascript">
+const url = 'https://script.google.com/macros/s/AKfycbwOCQeqeJjun_FORkuvZw3AQk48tblQr_VvNb1Zg1w3hQnCpKWoZcXalozCgezQmexN/exec';
+const alertSyntaxError = `⚠\nVăn bản đầu ra có một số ký tự "}" hoặc "{" do đầu vào gõ nhầm "}" thành "}}". Kiểm tra đầu vào`;
+const alertLinkError = "Anchortext hoặc link trống";
+const alertInputError = "Nhập nội dung!";
+const alertNoSynonymsFound = "Không tìm thấy từ đồng nghĩa";
+let filterLevel = document.getElementById('levelSelect');
+let textSpin = document.querySelector('#textSpin');
+let contentSpin = textSpin.innerHTML;
+let dataSynonyms = [];
+let filterSynonyms = [];
+let resultArray = [];
+let arraySpin = [],
+	dataSpin = [];
+let wordSpin = [];
+let selectedText = "";
+let selectedValues = [];
+let popup = document.querySelector('#popup-right-click ul');
+let popupAbsolute = document.querySelector('#popup-right-click');
+let currentRange;
+let cursorPosition = null;
+const anchorText = document.querySelector('#anchor-text');
+const linkInput = document.querySelector('#backlink');
+handleOptionSelection();
+filterLevel.addEventListener('change', handleOptionSelection);
+
+function handleOptionSelection() {
+	document.getElementById('loading').style.display = 'block';
+	let valueLevel = filterLevel.value;
+	let searchParams = new URLSearchParams();
+	if (valueLevel === 'Level 1') {
+		searchParams.set('filterLevel', 1);
+	} else if (valueLevel === 'Level 2') {
+		searchParams.set('filterLevel', 2);
+	} else {
+		searchParams.set('filterLevel', 3);
+	}
+	let urlFilter = new URL(url);
+	urlFilter.search = searchParams.toString();
+	fetch(urlFilter)
+		.then(response => response.json())
+		.then(data => {
+			filterSynonyms = data.filtered.flat();
+			dataSynonyms = data.unfiltered.flat();
+			getWordSpin();
+			underLight();
+			document.getElementById('loading').style.display = 'none';
+		});
+}
+
+function highLight() {
+	document.getElementById('loading').style.display = 'block';
+	sleep(1000).then(() => {
+		getWordSpin();
+		underLight();
+		document.getElementById('loading').style.display = 'none';
+	});
+}
+
+function getWordSpin() {
+	wordSpin = [];
+	contentSpin = document.querySelector('#textSpin').innerHTML;
+	contentSpin = contentSpin.replace(/<\/?(?:w)>/g, '').replace(/<\/div>/g, '').replace(/<div>/g, '<br/>');
+	document.querySelector('#textSpin').innerHTML = contentSpin;
+	let contentWithoutTags = contentSpin.replace(/<img[^>]*>|<iframe[^>]*>|<a[^>]*>.*?<\/a>/gi, '');
+	arraySpin = [...new Set([].concat(...dataSynonyms.map(item => item.split('|'))))].sort((a, b) => b.length - a.length);
+	dataSpin = [...new Set(arraySpin)].filter(item => item && item.trim()).sort((a, b) => b.length - a.length);
+	for (let i = 0; i < dataSpin.length; i++) {
+		let pattern = new RegExp(`(\\s|^|>)(${dataSpin[i]})(\\s|$|[,.;?!:<])`, 'g');
+		if (pattern.test(contentWithoutTags)) {
+			wordSpin.push(dataSpin[i]);
+		}
+	}
+	wordSpin = wordSpin.sort((a, b) => b.length - a.length);
+}
+
+function underLight() {
+	if (document.getElementById('textSpin').innerText.trim() == "") {
+		alert(alertInputError);
+	} else {
+		contentSpin = textSpin.innerHTML;
+		let filterArray = [];
+		if (document.querySelector('#textSpin').innerHTML.includes("<o>")) {
+			filterArray = contentSpin.match(/(\{|<wbr>)([^|}{]+)(<\/o>|\|)/g).map(match => match.replace(/(<wbr>|\{|<\/?o>|\|)/g, ''));
+		}
+		wordSpin = wordSpin.filter(item => !filterArray.includes(item));
+		for (let i = 0; i < wordSpin.length; i++) {
+			let keyword = wordSpin[i];
+			let replacement = '<w>' + keyword + '</w>';
+			let pattern = new RegExp(`(?<!<[^>]*)(?<![-"'])(\\s|\\b|^|>)(${keyword.replace(/\./g, '\\.')})(\\s|\\b|$|[,.;?!:<])(?![->"'])`, 'g');
+			contentSpin = contentSpin.replace(pattern, (match, p1, p2, p3) => p1 + replacement + p3);
+		}
+		document.querySelector('#textSpin').innerHTML = contentSpin;
+		if (!document.querySelector('#nested-spintax').checked) {
+			delTag();
+			wordSpin = [...new Set(document.querySelector('#textSpin').innerHTML.match(/(<w>)([^>]+)(<\/w>)/g).map(match => match.replace(/(<\/?w>)/g, '')))].sort((a, b) => b.length - a.length);
+		}
+	}
+}
+
+function getSelectionRange() {
+	let selection = window.getSelection();
+	return selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+}
+
+function createLinkElement(anchorText, link) {
+	const linkElement = document.createElement('a');
+	linkElement.href = link;
+	linkElement.textContent = anchorText;
+	return linkElement;
+}
+
+function insertLinkAtCursorPosition(anchorTextValue, link) {
+	const range = document.createRange();
+	const linkElement = createLinkElement(anchorTextValue, link);
+	const textSpinNode = textSpin.childNodes[0];
+	range.setStart(textSpinNode, 0);
+	range.collapse(true);
+	range.insertNode(linkElement);
+}
+
+function insertLink(range, anchorTextValue, link) {
+	const selectedText = range.toString();
+	const anchorText = selectedText.length > 0 ? selectedText : anchorTextValue;
+	const linkElement = createLinkElement(anchorText, link);
+	range.deleteContents();
+	range.insertNode(linkElement);
+}
+document.querySelector('#textSpin').addEventListener('mouseup', function(event) {
+	const selectionRange = getSelectionRange();
+	if (selectionRange) {
+		cursorPosition = selectionRange.cloneRange();
+	}
+});
+document.querySelector('#btn-link').addEventListener('click', function() {
+	const anchorTextValue = anchorText.value;
+	const link = linkInput.value;
+	const range = getSelectionRange();
+	if (!range || range < 1 && anchorTextValue.trim() === '' || link === '') {
+		alert(alertLinkError);
+		return;
+	}
+	if (range && range.commonAncestorContainer === textSpin) {
+		insertLink(range, anchorTextValue, link);
+	} else if (cursorPosition) {
+		insertLink(cursorPosition, anchorTextValue, link);
+	} else {
+		insertLinkAtCursorPosition(anchorTextValue, link);
+	}
+});
+document.getElementById("textSpin").addEventListener("paste", function(event) {
+	event.preventDefault();
+	let text = event.clipboardData.getData("text/plain");
+	insertTextAtCursor(text);
+});
+textSpin.addEventListener('contextmenu', function(event) {
+	let sel = window.getSelection();
+	if (sel.rangeCount > 0) {
+		currentRange = sel.getRangeAt(0);
+	}
+	selectedText = window.getSelection().toString();
+	if (selectedText !== "") {
+		event.preventDefault();
+		resultArray = dataSynonyms.filter(item => item.startsWith(selectedText + '|') || item.endsWith('|' + selectedText) || item.includes('|' + selectedText + '|'));
+		resultArray = resultArray.map(function(item) {
+			return item.replace(/\|/g, '|<wbr>');
+		});
+		popup.innerHTML = '';
+		if (resultArray.length > 0) {
+			resultArray.forEach(item => {
+				const listItem = document.createElement('li');
+				listItem.innerHTML = item;
+				listItem.addEventListener('click', function() {
+					if (selectedValues.includes(item)) {
+						selectedValues.splice(selectedValues.indexOf(item), 1);
+						listItem.style.backgroundColor = '';
+					} else {
+						selectedValues.push(item);
+						listItem.style.backgroundColor = 'lightblue';
+					}
+				});
+				popup.appendChild(listItem);
+			});
+		} else {
+			popup.innerHTML = alertNoSynonymsFound;
+		}
+		let targetElement = document.elementFromPoint(event.clientX, event.clientY);
+		let parentElement = targetElement.parentElement;
+		if (document.querySelector('#textSpin').contains(parentElement)) {
+			let containerElement = targetElement;
+			popupAbsolute.style.left = containerElement.offsetLeft + "px";
+			popupAbsolute.style.top = containerElement.offsetTop + "px";
+		} else {
+			popupAbsolute.style.left = (event.target.offsetLeft + event.offsetX) + "px";
+			popupAbsolute.style.top = (event.target.offsetTop + event.offsetY) + "px";
+		}
+		popupAbsolute.style.display = "block";
+	}
+});
+document.addEventListener('click', function(event) {
+	if (!popup.contains(event.target)) {
+		if (selectedValues.length > 0 && currentRange) {
+			let divElement = document.createElement("div");
+			let textToInsertArray = [...new Set(selectedValues.join('|<wbr>').split('|<wbr>'))];
+			let filteredArray = textToInsertArray.filter(item => item !== selectedText);
+			if (wordSpin.includes(selectedText)) {
+				filteredArray.push(`<o>${currentRange}</o>`);
+			} else {
+				filteredArray.push(currentRange);
+			}
+			let textToInsert = filteredArray.join('|<wbr>');
+			divElement.innerHTML = `<v>{${textToInsert}}</v>`;
+			currentRange.deleteContents();
+			currentRange.insertNode(new DOMParser().parseFromString(divElement.innerHTML, 'text/html').body.firstChild);
+			selectedValues = [];
+			removeUnderline();
+		}
+		popupAbsolute.style.display = 'none';
+		popup.innerHTML = "";
+	}
+});
+
+function removeUnderline() {
+	contentSpin = document.querySelector('#textSpin').innerHTML;
+	while (contentSpin.includes("<w></w>")) {
+		contentSpin = contentSpin.replace("<w></w>", "");
+	}
+	while (contentSpin.includes("<w><v>{")) {
+		contentSpin = contentSpin.replace("<w><v>{", "<v>{");
+	}
+	while (contentSpin.includes("}</v></w>")) {
+		contentSpin = contentSpin.replace("}</v></w>", "}</v>");
+	}
+	document.querySelector('#textSpin').innerHTML = contentSpin;
+}
+
+function insertTextAtCursor(text) {
+	let sel, range;
+	if (window.getSelection) {
+		sel = window.getSelection();
+		if (sel.getRangeAt && sel.rangeCount) {
+			range = sel.getRangeAt(0);
+			range.deleteContents();
+			let textNode;
+			if (text.startsWith('<') && text.endsWith('>')) {
+				let divElement = document.createElement("div");
+				divElement.innerHTML = text;
+				textNode = divElement.firstChild;
+			} else {
+				textNode = document.createTextNode(text);
+			}
+			range.insertNode(textNode);
+			range.setStartAfter(textNode);
+			sel.removeAllRanges();
+			sel.addRange(range);
+		}
+	}
+}
+
+function Html() {
+	document.getElementById("textHtml").classList.toggle('hidden');
+	document.getElementById("lblSpin").classList.toggle('hidden');
+	document.getElementById("showHtml").classList.toggle('hidden');
+	document.getElementById("showPreview").classList.toggle('hidden');
+}
+
+function Spin() {
+	let content = document.getElementById("textSpin").innerHTML.trim();
+	const unique = document.querySelector('#unique').checked;
+	if (document.querySelector('#textSpin').innerHTML.includes("<w>")) {
+		document.getElementById('loading').style.display = 'block';
+		sleep(1000).then(() => {
+			content = content.replace(/<\/?(?:wbr|w)>/g, '');
+			getWordSpin();
+			document.getElementById('loading').style.display = 'none';
+        });
+	} else {
+		content = content.replace(/<\/?(?:wbr)>/g, '');
+	}
+	if (unique) {
+		for (let i = 0; i < wordSpin.length; i++) {
+			let keyword = wordSpin[i];
+			let pattern = new RegExp('(\|<o>)(' + keyword.replace(/\./g, '\\.') + ')(<\/o>)', 'g');
+			content = content.replace(pattern, '');
+		}
+	}
+	if (document.getElementById('textSpin').innerText.trim() == "") {
+		alert(alertInputError);
+	} else {
+		document.getElementById("lblSpin").innerHTML = GetSpinContent(content);
+		document.getElementById("outputSpin").classList.remove('hidden');
+		document.getElementById("textHtml").value = removeUnnecessaryTags(content);
+		document.getElementById("inpHtml").style.display = "";
+	}
+}
+
+function GetSpinContent(text) {
+	var result = text;
+	result = result.replace(/\|\|/g, '|');
+	result = result.replace(/\{\|/g, '{');
+	result = result.replace(/\|\}/g, '}');
+	var reg = new RegExp(/{([^{}]*)}/i);
+	while (matches = reg.exec(result)) {
+		var array = [];
+		array = matches[1].split('|');
+		result = result.replace(matches[0], array[Math.floor(Math.random() * array.length)]);
+	}
+	if (result.includes("{") || result.includes("}")) {
+		alert(alertSyntaxError);
+	}
+	return result;
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function autoSpin() {
+	document.getElementById('loading').style.display = 'block';
+	sleep(2000).then(() => {
+		contentSpin = document.querySelector('#textSpin').innerHTML;
+		contentSpin = contentSpin.replace(/<\/?(?:w|v)>/g, '').replace(/<\/div>/g, '').replace(/<div>/g, '<br/>');
+		document.querySelector('#textSpin').innerHTML = contentSpin;
+		let contentAutoSpin = document.querySelector('#textSpin').innerHTML;
+		if (document.querySelector('#nested-spintax').checked) {
+			getWordSpin();
+			wordSpin = wordSpin.filter(item => item.includes(" "));
+		} else {
+			highLight();
+			wordSpin = wordSpin.filter(item => item.includes(" "));
+		}
+		if (wordSpin.length > 0) {
+			/*----------------------------------------------------
+								var imgTags = Array.from(textSpin.getElementsByTagName('img'));
+								var iframeTags = Array.from(textSpin.getElementsByTagName('iframe'));
+								var tagsWithRandomValues = {};
+								imgTags.forEach(function(imgTag) {
+									var randomValue = 'RANDOM_' + Math.random().toString(36).substr(2, 9);
+									tagsWithRandomValues[imgTag.outerHTML] = randomValue;
+									textSpin.innerHTML = textSpin.innerHTML.replace(imgTag.outerHTML, randomValue);
+								});
+								iframeTags.forEach(function(iframeTag) {
+									var randomValue = 'RANDOM_' + Math.random().toString(36).substr(2, 9);
+									tagsWithRandomValues[iframeTag.outerHTML] = randomValue;
+									textSpin.innerHTML = textSpin.innerHTML.replace(iframeTag.outerHTML, randomValue);
+								});
+			----------------------------------------------------*/
+			//----------------------------------------------------
+			for (let i = 0; i < wordSpin.length; i++) {
+				let filterArray = filterSynonyms.filter(item => item.startsWith(wordSpin[i] + '|') || item.endsWith('|' + wordSpin[i]) || item.includes('|' + wordSpin[i] + '|'));
+				let favArray = filterArray.join('|').split('|');
+				favArray = [...new Set(favArray)].filter(item => item !== wordSpin[i]);
+				if (wordSpin.includes(wordSpin[i])) {
+					favArray.push(`<o>${wordSpin[i]}</o>`);
+				} else {
+					favArray.push(wordSpin[i]);
+				}
+				let textToInsert = favArray.join('|<wbr>');
+
+				function replaceKeywordsInTextWithRandom(sellectElement, keyword) {
+					contentAutoSpin = contentAutoSpin.replace(new RegExp(`(?<!<[^>]*)(?<![-"'])(\\s|\\b|^|>)(${keyword.replace(/\./g, '\\.')})(\\s|\\b|$|[,.;?!:<])(?![->"'])`, 'g'), (match, p1, p2, p3) => p1 + `<v>{${textToInsert}}</v>` + p3);
+				}
+				if (filterArray.length > 0) {
+					let keywordsToReplace = wordSpin[i];
+					let targetElement = document.getElementById('textSpin');
+					let replaceContent = `<v>{${textToInsert}}</v>`;
+					replaceKeywordsInTextWithRandom(targetElement, keywordsToReplace, replaceContent);
+				}
+			}
+			//----------------------------------------------------
+			/*----------------------------------------------------
+								for (var tagHTML in tagsWithRandomValues) {
+									var randomValue = tagsWithRandomValues[tagHTML];
+									contentAutoSpin = contentAutoSpin.replace(randomValue, tagHTML);
+								}
+			----------------------------------------------------*/
+			textSpin.innerHTML = contentAutoSpin;
+			/*----------------------------------------------------
+						for (let i = 0; i < wordSpin.length; i++) {
+							let filterArray = filterSynonyms.filter(item => item.startsWith(wordSpin[i] + '|') || item.endsWith('|' + wordSpin[i]) || item.includes('|' + wordSpin[i] + '|'));
+							let favArray = filterArray.join('|').split('|');
+							favArray = [...new Set(favArray)].filter(item => item !== wordSpin[i]);
+							if (wordSpin.includes(wordSpin[i])) {
+								favArray.push(`<o>${wordSpin[i]}</o>`);
+							} else {
+								favArray.push(wordSpin[i]);
+							}
+							let textToInsert = favArray.join('|<wbr>');
+							function replaceKeywordsInTextWithRandom(sellectElement, keyword) {
+								var imgTags = Array.from(sellectElement.getElementsByTagName('img'));
+								var iframeTags = Array.from(sellectElement.getElementsByTagName('iframe'));
+								var tagsWithRandomValues = {};
+								imgTags.forEach(function(imgTag) {
+									var randomValue = 'RANDOM_' + Math.random().toString(36).substr(2, 9);
+									tagsWithRandomValues[imgTag.outerHTML] = randomValue;
+									sellectElement.innerHTML = sellectElement.innerHTML.replace(imgTag.outerHTML, randomValue);
+								});
+								iframeTags.forEach(function(iframeTag) {
+									var randomValue = 'RANDOM_' + Math.random().toString(36).substr(2, 9);
+									tagsWithRandomValues[iframeTag.outerHTML] = randomValue;
+									sellectElement.innerHTML = sellectElement.innerHTML.replace(iframeTag.outerHTML, randomValue);
+								});
+								contentAutoSpin = contentAutoSpin.replace(new RegExp(`(?<!<[^>]*)(?<![-"'])(\\s|^|\>)(${keyword.replace(/\./g, '\\.')})(\\s|$|[,.;?!:<])(?![->"'])`, 'g'), (match, p1, p2, p3) => p1 + `<v>{${textToInsert}}</v>` + p3);
+								for (var tagHTML in tagsWithRandomValues) {
+									var randomValue = tagsWithRandomValues[tagHTML];
+									contentAutoSpin = contentAutoSpin.replace(randomValue, tagHTML);
+								}
+								sellectElement.innerHTML = contentAutoSpin;
+							}
+							if (filterArray.length > 0) {
+								let keywordsToReplace = wordSpin[i];
+								let targetElement = document.getElementById('textSpin');
+								let replaceContent = `<v>{${textToInsert}}</v>`;
+								replaceKeywordsInTextWithRandom(targetElement, keywordsToReplace, replaceContent);
+							}
+						}
+			----------------------------------------------------*/
+		}
+		highLight();
+	});
+	document.getElementById("auto-spin").style.display = "none";
+	document.getElementById("reset").style.display = "";
+	document.getElementById("inpSpin").style.display = "";
+}
+
+function resetInput() {
+	document.getElementById("reset").style.display = "none";
+	document.getElementById("inpSpin").style.display = "none";
+	document.getElementById("inpHtml").style.display = "none";
+	document.getElementById('textSpin').innerHTML = "";
+	document.getElementById('synonym').style.display = "";
+	document.getElementById('auto-spin').style.display = "";
+}
+
+function removeUnnecessaryTags(content) {
+	let spinContent = GetSpinContent(content);
+	spinContent = spinContent.replace(/<\/?(?:w|v|o)>/g, '').replace(/<\/div>/g, '').replace(/<div>/g, '<br/>');
+	return spinContent;
+}
+
+function delTag() {
+	let del = document.querySelectorAll('#textSpin w');
+	for (let i = 0; i < del.length; i++) {
+		if (del[i].innerHTML.includes("<w>")) {
+			del[i].innerHTML = del[i].innerHTML.replace(/<w>|<\/w>/g, '');
+		}
+	}
+}
+</script>
+<style>
+td > * {
+  margin-bottom: 5px;
+}
+.brz-embed-code iframe {
+  max-width: 100%;
+}
+#advanced {
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 5px
+}
+#inpSpin, #auto-spin {
+  background: yellowgreen;
+  border: 2px solid yellowgreen;
+}
+tr button {
+  cursor: pointer;
+}
+#textSpin, #textHtml, div#lblSpin {
+  width:100%;
+  padding: 15px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+#anchor-text, #backlink {
+  min-width: 200px;
+  max-width: 100%;
+}
+*:not(w) > w {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+*:not(w) > w > w {
+  border-bottom: 1px solid blue;
+}
+*:not(w)  > w > w > w {
+  border-bottom: 1px solid green;
+  padding-bottom: 2px;
+}
+*:not(w)  > w > w > w > w {
+  border-bottom: 1px solid #ffb300;
+  padding-bottom: 4px;
+}
+#lblSpin v {
+  background: #00800070;
+}
+#loading {
+  width: 100vw;
+  height: 100vh;
+  background: #818a9180;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+#loading > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#popup-right-click {
+  position: absolute;
+  width: 42%;
+  padding: 15px;
+  background: wheat;
+  z-index: 999
+}
+#popup-right-click li {
+  border-bottom: 1px solid #cccccc;
+  padding: 5px 0;
+}
+#popup-right-click::before {
+  content: "X";
+  color: red;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+#popup-right-click > ul {
+  padding: 0!important;
+  overflow-y: scroll;
+  max-height: 300px;
+}
+#popup-right-click li::marker {
+  color: transparent;
+}
+/* width */
+#popup-right-click ul::-webkit-scrollbar {
+  width: 5px;
+}
+ /* Handle */
+#popup-right-click ul::-webkit-scrollbar-thumb {
+  background: #a8a8a880; 
+  border-radius: 10px;
+}
+/* Handle on hover */
+#popup-right-click ul::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8; 
+}
+/* data title */
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.0s;
+  visibility: visible;
+}
+[data-title]:after {
+  content: attr(data-title);
+  position: absolute;
+  width: 300px;
+  top: -220%;
+  left: 0;
+  z-index: 99999;
+  visibility: hidden;
+  background-color: #e5e5e5;
+  color: inherit;
+  font-size: 90%;
+  padding: 1px 5px 2px 5px;
+  opacity: 0;
+  border: 1px solid rgba(85, 85, 85, 1);
+  border-radius: 3px;
+}
+[data-title] {
+  position: relative;
+}
+</style>

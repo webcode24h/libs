@@ -1,0 +1,289 @@
+[{
+    "Id": "79",
+    "Name": "Hồ Chí Minh",
+    "Districts": [{
+        "Id": "766",
+        "Name": "Quận Tân Bình",
+        "Wards": [{
+            "Id": "7661",
+            "Name": "Phường 1",
+            "Level": "Phường"
+        }, {
+            "Id": "7662",
+            "Name": "Phường 2",
+            "Level": "Phường"
+        }, {
+            "Id": "7663",
+            "Name": "Phường 3",
+            "Level": "Phường"
+        }, {
+            "Id": "7664",
+            "Name": "Phường 4",
+            "Level": "Phường"
+        }, {
+            "Id": "7665",
+            "Name": "Phường 5",
+            "Level": "Phường"
+        }, {
+            "Id": "7666",
+            "Name": "Phường 6",
+            "Level": "Phường"
+        }, {
+            "Id": "7667",
+            "Name": "Phường 7",
+            "Level": "Phường"
+        }, {
+            "Id": "7668",
+            "Name": "Phường 8",
+            "Level": "Phường"
+        }, {
+            "Id": "7669",
+            "Name": "Phường 9",
+            "Level": "Phường"
+        }, {
+            "Id": "76610",
+            "Name": "Phường 10",
+            "Level": "Phường"
+        }, {
+            "Id": "76611",
+            "Name": "Phường 11",
+            "Level": "Phường"
+        }, {
+            "Id": "76612",
+            "Name": "Phường 12",
+            "Level": "Phường"
+        }, {
+            "Id": "76613",
+            "Name": "Phường 13",
+            "Level": "Phường"
+        }, {
+            "Id": "76614",
+            "Name": "Phường 14",
+            "Level": "Phường"
+        }, {
+            "Id": "76615",
+            "Name": "Phường 15",
+            "Level": "Phường"
+        }, {
+            "Id": "7660",
+            "Name": "Không có tên trong đây",
+            "Level": "Phường"
+        }]
+    }, {
+        "Id": "767",
+        "Name": "Quận Tân Phú",
+        "Wards": [{
+            "Id": "7671",
+            "Name": "Phường Hiệp Tân",
+            "Level": "Phường"
+        }, {
+            "Id": "7672",
+            "Name": "Phường Hòa Thạnh",
+            "Level": "Phường"
+        }, {
+            "Id": "7673",
+            "Name": "Phường Phú Thạnh",
+            "Level": "Phường"
+        }, {
+            "Id": "7674",
+            "Name": "Phường Phú Thọ Hòa",
+            "Level": "Phường"
+        }, {
+            "Id": "7675",
+            "Name": "Phường Phú Trung",
+            "Level": "Phường"
+        }, {
+            "Id": "7676",
+            "Name": "Phường Sơn Kỳ",
+            "Level": "Phường"
+        }, {
+            "Id": "7677",
+            "Name": "Phường Tân Quý",
+            "Level": "Phường"
+        }, {
+            "Id": "7678",
+            "Name": "Phường Tân Sơn Nhì",
+            "Level": "Phường"
+        }, {
+            "Id": "7679",
+            "Name": "Phường Tân Thành",
+            "Level": "Phường"
+        }, {
+            "Id": "76710",
+            "Name": "Phường Tân Thới Hòa",
+            "Level": "Phường"
+        }, {
+            "Id": "76711",
+            "Name": "Phường Tây Thạnh",
+            "Level": "Phường"
+        }, {
+            "Id": "7670",
+            "Name": "Không có tên trong đây",
+            "Level": "Phường"
+        }]
+    }, {
+        "Id": "768",
+        "Name": "Quận Phú Nhuận",
+        "Wards": [{
+            "Id": "7681",
+            "Name": "Phường 1",
+            "Level": "Phường"
+        }, {
+            "Id": "7682",
+            "Name": "Phường 2",
+            "Level": "Phường"
+        }, {
+            "Id": "7683",
+            "Name": "Phường 3",
+            "Level": "Phường"
+        }, {
+            "Id": "7684",
+            "Name": "Phường 4",
+            "Level": "Phường"
+        }, {
+            "Id": "7685",
+            "Name": "Phường 5",
+            "Level": "Phường"
+        }, {
+            "Id": "7686",
+            "Name": "Phường 6",
+            "Level": "Phường"
+        }, {
+            "Id": "7687",
+            "Name": "Phường 7",
+            "Level": "Phường"
+        }, {
+            "Id": "7688",
+            "Name": "Phường 8",
+            "Level": "Phường"
+        }, {
+            "Id": "7689",
+            "Name": "Phường 9",
+            "Level": "Phường"
+        }, {
+            "Id": "76810",
+            "Name": "Phường 10",
+            "Level": "Phường"
+        }, {
+            "Id": "76811",
+            "Name": "Phường 11",
+            "Level": "Phường"
+        }, {
+            "Id": "76812",
+            "Name": "Phường 12",
+            "Level": "Phường"
+        }, {
+            "Id": "76813",
+            "Name": "Phường 13",
+            "Level": "Phường"
+        }, {
+            "Id": "76814",
+            "Name": "Phường 14",
+            "Level": "Phường"
+        }, {
+            "Id": "76815",
+            "Name": "Phường 15",
+            "Level": "Phường"
+        }, {
+            "Id": "76817",
+            "Name": "Phường 17",
+            "Level": "Phường"
+        }, {
+            "Id": "7680",
+            "Name": "Không có tên trong đây",
+            "Level": "Phường"
+        }]
+    }, {
+        "Id": "145",
+        "Name": "Quận Bình Thạnh",
+        "Wards": [{
+            "Id": "1451",
+            "Name": "Phường 1",
+            "Level": "Phường"
+        }, {
+            "Id": "1452",
+            "Name": "Phường 2",
+            "Level": "Phường"
+        }, {
+            "Id": "1453",
+            "Name": "Phường 3",
+            "Level": "Phường"
+        }, {
+            "Id": "1455",
+            "Name": "Phường 5",
+            "Level": "Phường"
+        }, {
+            "Id": "1456",
+            "Name": "Phường 6",
+            "Level": "Phường"
+        }, {
+            "Id": "1457",
+            "Name": "Phường 7",
+            "Level": "Phường"
+        }, {
+            "Id": "14511",
+            "Name": "Phường 11",
+            "Level": "Phường"
+        }, {
+            "Id": "14512",
+            "Name": "Phường 12",
+            "Level": "Phường"
+        }, {
+            "Id": "14513",
+            "Name": "Phường 13",
+            "Level": "Phường"
+        }, {
+            "Id": "14514",
+            "Name": "Phường 14",
+            "Level": "Phường"
+        }, {
+            "Id": "14515",
+            "Name": "Phường 15",
+            "Level": "Phường"
+        }, {
+            "Id": "14516",
+            "Name": "Phường 16",
+            "Level": "Phường"
+        }, {
+            "Id": "14517",
+            "Name": "Phường 17",
+            "Level": "Phường"
+        }, {
+            "Id": "14519",
+            "Name": "Phường 19",
+            "Level": "Phường"
+        }, {
+            "Id": "14521",
+            "Name": "Phường 21",
+            "Level": "Phường"
+        }, {
+            "Id": "14522",
+            "Name": "Phường 22",
+            "Level": "Phường"
+        }, {
+            "Id": "14524",
+            "Name": "Phường 24",
+            "Level": "Phường"
+        }, {
+            "Id": "14525",
+            "Name": "Phường 25",
+            "Level": "Phường"
+        }, {
+            "Id": "14526",
+            "Name": "Phường 26",
+            "Level": "Phường"
+        }, {
+            "Id": "14527",
+            "Name": "Phường 27",
+            "Level": "Phường"
+        }, {
+            "Id": "14528",
+            "Name": "Phường 28",
+            "Level": "Phường"
+        }, {
+            "Id": "1450",
+            "Name": "Không có tên trong đây",
+            "Level": "Phường"
+        }]
+    }]
+}]

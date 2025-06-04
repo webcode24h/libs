@@ -7,15 +7,8 @@
         "Id": "vios",
         "Name": "Vios",
         "Versions": [
-          { "Id": "vios-e", "Name": "Vios E" },
-          { "Id": "vios-g", "Name": "Vios G" }
-        ]
-      },
-      {
-        "Id": "corolla",
-        "Name": "Corolla",
-        "Versions": [
-          { "Id": "corolla-altis", "Name": "Altis" }
+          { "Id": "vios-e", "Name": "Vios E", "Price": 500000000 },
+          { "Id": "vios-g", "Name": "Vios G", "Price": 600000000 }
         ]
       }
     ]
@@ -28,8 +21,8 @@
         "Id": "city",
         "Name": "City",
         "Versions": [
-          { "Id": "city-e", "Name": "City E" },
-          { "Id": "city-g", "Name": "City G" }
+          { "Id": "city-e", "Name": "City E", "Price": 520000000 },
+          { "Id": "city-g", "Name": "City G", "Price": 580000000 }
         ]
       }
     ]

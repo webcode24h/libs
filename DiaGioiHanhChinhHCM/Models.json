@@ -1,0 +1,37 @@
+[
+  {
+    "Id": "toyota",
+    "Name": "Toyota",
+    "Models": [
+      {
+        "Id": "vios",
+        "Name": "Vios",
+        "Versions": [
+          { "Id": "vios-e", "Name": "Vios E" },
+          { "Id": "vios-g", "Name": "Vios G" }
+        ]
+      },
+      {
+        "Id": "corolla",
+        "Name": "Corolla",
+        "Versions": [
+          { "Id": "corolla-altis", "Name": "Altis" }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "honda",
+    "Name": "Honda",
+    "Models": [
+      {
+        "Id": "city",
+        "Name": "City",
+        "Versions": [
+          { "Id": "city-e", "Name": "City E" },
+          { "Id": "city-g", "Name": "City G" }
+        ]
+      }
+    ]
+  }
+]
